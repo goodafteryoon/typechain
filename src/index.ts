@@ -1,7 +1,4 @@
-import { init, exit } from 'myPackage';
+import { init, exit } from './myPackage';
 
-init({
-  url: 'true',
-});
-
-exit(1);
+// call signature 확인
+init({ debug: true, url: 'sdfs' });
