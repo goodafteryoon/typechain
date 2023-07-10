@@ -20,3 +20,33 @@ class Block implements BlockShape {
     return crypto.createHash('sha256').update(toHash).digest('hex');
   }
 }
+
+class BlockChain {
+  private blocks: Block[];
+  constructor() {
+    this.blocks = [];
+  }
+  private getPrevHash() {
+    if (this.blocks.length === 0) return '';
+    return this.blocks[this.blocks.length - 1].hash;
+  }
+  public addBlock(data: string) {
+    const newBlock = new Block(
+      this.getPrevHash(),
+      this.blocks.length + 1,
+      data
+    ); // 블록을 생성하면 그 블록을 즉시 해쉬한다.
+    this.blocks.push(newBlock);
+  }
+  public getBlocks() {
+    return [...this.blocks]; // 아예 새로운 배열로 리턴해줘야 원본 배열에 접근 불가능
+  }
+}
+
+const blockchain = new BlockChain();
+
+blockchain.addBlock('First one');
+blockchain.addBlock('Second one');
+blockchain.addBlock('Third one');
+
+console.log(blockchain.getBlocks());
